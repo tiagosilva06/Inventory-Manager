@@ -1,8 +1,8 @@
-# 🛍️ Sistema de Controle de Stock - Donna Vanda Modas
+# 🛍️ Sistema de Controle de Estoque
 
 ![Gravação de Tela 2025-06-01 230808](https://github.com/user-attachments/assets/7b5d6e4d-b83b-4074-9501-632980d2142c)
 
-Este projeto é uma **aplicação simples de controle de estoque**, desenvolvida em **Java**, para auxiliar uma loja familiar de moda que vende produtos em plataformas como **Shopee**, **Mercado Livre** e **Shein**.
+Este projeto é uma **aplicação simples de controle de estoque**, desenvolvida em **Java**.
 
 A aplicação conta com interface gráfica feita em **Swing**, funcionalidades de CRUD e filtros implementados com **Java Stream API**.
 
