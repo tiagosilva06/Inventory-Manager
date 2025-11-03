@@ -1,30 +1,29 @@
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.*;
 
-public class EstoqueGUI extends JFrame {
-    private Estoque estoque = new Estoque();
+public class StockGUI extends JFrame {
+    private Stock stock = new Stock();
 
-    private JTextField codigoField = new JTextField(10);
-    private JTextField modeloField = new JTextField(10);
-    private JTextField corField = new JTextField(10);
-    private JTextField tamanhoField = new JTextField(10);
-    private JTextField quantidadeField = new JTextField(5);
-    private JTable tabelaProdutos;
+    private JTextField codeField = new JTextField(10);
+    private JTextField modelField = new JTextField(10);
+    private JTextField colorField = new JTextField(10);
+    private JTextField sizeField = new JTextField(10);
+    private JTextField quantityField = new JTextField(5);
+    private JTable tableProducts;
     private DefaultTableModel tableModel;
 
-    public EstoqueGUI() {
+    public StockGUI() {
         setTitle("Controle de Estoque - Donna Vanda Modas");
         setSize(800, 600);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        criarComponentes();
+        createComponents();
         setVisible(true);
     }
 
-    private void criarComponentes() {
+    private void createComponents() {
         JPanel painelTopo = new JPanel(new GridLayout(2, 5, 10, 10));
         painelTopo.setBorder(BorderFactory.createTitledBorder("Dados do Produto"));
 
@@ -34,11 +33,11 @@ public class EstoqueGUI extends JFrame {
         painelTopo.add(new JLabel("Tamanho:"));
         painelTopo.add(new JLabel("Quantidade:"));
 
-        painelTopo.add(codigoField);
-        painelTopo.add(modeloField);
-        painelTopo.add(corField);
-        painelTopo.add(tamanhoField);
-        painelTopo.add(quantidadeField);
+        painelTopo.add(codeField);
+        painelTopo.add(modelField);
+        painelTopo.add(colorField);
+        painelTopo.add(sizeField);
+        painelTopo.add(quantityField);
 
         JPanel painelBotoes = new JPanel(new FlowLayout());
         JButton btnAdicionar = new JButton("Adicionar");
@@ -55,24 +54,24 @@ public class EstoqueGUI extends JFrame {
 
         String[] colunas = {"Código", "Modelo", "Cor", "Tamanho", "Quantidade"};
         tableModel = new DefaultTableModel(colunas, 0);
-        tabelaProdutos = new JTable(tableModel);
+        tableProducts = new JTable(tableModel);
 
-        JScrollPane scrollPane = new JScrollPane(tabelaProdutos);
+        JScrollPane scrollPane = new JScrollPane(tableProducts);
 
         // Eventos
-        btnAdicionar.addActionListener(e -> adicionarProduto());
-        btnRemover.addActionListener(e -> removerProduto());
-        btnListar.addActionListener(e -> atualizarTabela(estoque.listarProdutos()));
+        btnAdicionar.addActionListener(e -> addProduct());
+        btnRemover.addActionListener(e -> removeProduct());
+        btnListar.addActionListener(e -> updateTable(stock.listarProdutos()));
         btnFiltrarNome.addActionListener(e -> {
             String nome = JOptionPane.showInputDialog("Digite o nome:");
             if (nome != null) {
-                atualizarTabela(estoque.filtrarPorNome(nome));
+                updateTable(stock.filterByName(nome));
             }
         });
         btnFiltrarCor.addActionListener(e -> {
             String cor = JOptionPane.showInputDialog("Digite a cor:");
             if (cor != null) {
-                atualizarTabela(estoque.filtrarPorCor(cor));
+                updateTable(stock.filterByColor(cor));
             }
         });
 
@@ -82,19 +81,19 @@ public class EstoqueGUI extends JFrame {
         add(scrollPane, BorderLayout.SOUTH);
     }
 
-    private void adicionarProduto() {
+    private void addProduct() {
         try {
-            String codigo = codigoField.getText();
-            String modelo = modeloField.getText();
-            String cor = corField.getText();
-            String tamanho = tamanhoField.getText();
-            int quantidade = Integer.parseInt(quantidadeField.getText());
+            String code = codeField.getText();
+            String model = modelField.getText();
+            String color = colorField.getText();
+            String size = sizeField.getText();
+            int quantity = Integer.parseInt(quantityField.getText());
 
-            Produto produto = new Produto(codigo, modelo, cor, tamanho, quantidade);
-            if (estoque.adicionarProduto(produto)) {
+            Product product = new Product(code, model, color, size, quantity);
+            if (stock.addProduct(product)) {
                 JOptionPane.showMessageDialog(this, "Produto adicionado com sucesso!");
-                limparCampos();
-                atualizarTabela(estoque.listarProdutos());
+                cleanFields();
+                updateTable(stock.listarProdutos());
             } else {
                 JOptionPane.showMessageDialog(this, "Código já existente!", "Erro", JOptionPane.ERROR_MESSAGE);
             }
@@ -103,34 +102,34 @@ public class EstoqueGUI extends JFrame {
         }
     }
 
-    private void removerProduto() {
+    private void removeProduct() {
         String codigo = JOptionPane.showInputDialog("Digite o código do produto:");
-        if (codigo != null && estoque.removerProduto(codigo)) {
+        if (codigo != null && stock.removeProduct(codigo)) {
             JOptionPane.showMessageDialog(this, "Produto removido com sucesso!");
-            atualizarTabela(estoque.listarProdutos());
+            updateTable(stock.listarProdutos());
         } else {
             JOptionPane.showMessageDialog(this, "Produto não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    private void atualizarTabela(java.util.List<Produto> lista) {
+    private void updateTable(java.util.List<Product> lista) {
         tableModel.setRowCount(0);
-        for (Produto p : lista) {
+        for (Product p : lista) {
             tableModel.addRow(new Object[]{
-                    p.getCodigo(), p.getModelo(), p.getCor(), p.getTamanho(), p.getQuantidade()
+                    p.getCode(), p.getModel(), p.getColor(), p.getSize(), p.getQuantity()
             });
         }
     }
 
-    private void limparCampos() {
-        codigoField.setText("");
-        modeloField.setText("");
-        corField.setText("");
-        tamanhoField.setText("");
-        quantidadeField.setText("");
+    private void cleanFields() {
+        codeField.setText("");
+        modelField.setText("");
+        colorField.setText("");
+        sizeField.setText("");
+        quantityField.setText("");
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(EstoqueGUI::new);
+        SwingUtilities.invokeLater(StockGUI::new);
     }
 }

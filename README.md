@@ -1,4 +1,4 @@
-# 🛍️ Sistema de Controle de Estoque - Donna Vanda Modas
+# 🛍️ Sistema de Controle de Stock - Donna Vanda Modas
 
 ![Gravação de Tela 2025-06-01 230808](https://github.com/user-attachments/assets/7b5d6e4d-b83b-4074-9501-632980d2142c)
 
