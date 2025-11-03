@@ -14,7 +14,7 @@ public class StockGUI extends JFrame {
     private DefaultTableModel tableModel;
 
     public StockGUI() {
-        setTitle("Controle de Estoque - Donna Vanda Modas");
+        setTitle("Controle de Estoque");
         setSize(800, 600);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -61,7 +61,7 @@ public class StockGUI extends JFrame {
         // Eventos
         btnAdicionar.addActionListener(e -> addProduct());
         btnRemover.addActionListener(e -> removeProduct());
-        btnListar.addActionListener(e -> updateTable(stock.listarProdutos()));
+        btnListar.addActionListener(e -> updateTable(stock.listProducts()));
         btnFiltrarNome.addActionListener(e -> {
             String nome = JOptionPane.showInputDialog("Digite o nome:");
             if (nome != null) {
@@ -93,7 +93,7 @@ public class StockGUI extends JFrame {
             if (stock.addProduct(product)) {
                 JOptionPane.showMessageDialog(this, "Produto adicionado com sucesso!");
                 cleanFields();
-                updateTable(stock.listarProdutos());
+                updateTable(stock.listProducts());
             } else {
                 JOptionPane.showMessageDialog(this, "Código já existente!", "Erro", JOptionPane.ERROR_MESSAGE);
             }
@@ -106,7 +106,7 @@ public class StockGUI extends JFrame {
         String codigo = JOptionPane.showInputDialog("Digite o código do produto:");
         if (codigo != null && stock.removeProduct(codigo)) {
             JOptionPane.showMessageDialog(this, "Produto removido com sucesso!");
-            updateTable(stock.listarProdutos());
+            updateTable(stock.listProducts());
         } else {
             JOptionPane.showMessageDialog(this, "Produto não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
         }

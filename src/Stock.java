@@ -36,7 +36,7 @@ public class Stock {
                 .collect(Collectors.toList());
     }
 
-    public List<Product> listarProdutos(){
+    public List<Product> listProducts(){
         return new ArrayList<>(products.values());
     }
 }
